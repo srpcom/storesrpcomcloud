@@ -5,38 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daftar Harga Paket XL - SRPCOM Store</title>
     
-    <!-- Meta Tags untuk SEO dan Sharing -->
+    <!-- Meta Tags -->
     <meta name="description" content="Daftar harga paket data XL Reguler termurah dan terpercaya tanpa OTP di SRPCOM Store.">
-    <meta property="og:title" content="SRPCOM Store - Paket Data XL Murah">
-    <meta property="og:description" content="Cek daftar harga terbaru paket XL Data Flex dan Combo Flex disini.">
     
-    <!-- Tailwind CSS (via CDN) -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Google Fonts -->
+    <!-- Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-    
-    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f3f4f6; /* slate-100 */
-        }
-        .card-hover:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        }
-        .gradient-header {
-            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
-        }
+        body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; }
+        .card-hover:hover { transform: translateY(-4px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+        .gradient-header { background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%); }
     </style>
 </head>
 <body class="flex flex-col min-h-screen">
 
-    <!-- Navbar -->
-    <nav class="bg-white shadow-sm sticky top-0 z-50">
+    <!-- ================= NAVBAR ================= -->
+    <nav class="bg-white shadow-sm sticky top-0 z-40">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
                 <div class="flex items-center">
@@ -52,15 +40,13 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- ================= HERO SECTION ================= -->
     <header class="gradient-header text-white py-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 class="text-3xl md:text-5xl font-bold mb-4">Paket Data XL Reguler</h1>
             <p class="text-blue-100 text-lg md:text-xl max-w-2xl mx-auto mb-8">
                 Solusi paket data murah tanpa OTP. Resmi, Aman, dan Terpercaya.
             </p>
-            
-            <!-- Search Bar -->
             <div class="max-w-xl mx-auto relative">
                 <input type="text" id="searchInput" placeholder="Cari nama paket (contoh: Flex S, 65GB)..." 
                     class="w-full px-6 py-4 rounded-full text-gray-800 shadow-lg focus:outline-none focus:ring-4 focus:ring-blue-300 transition placeholder-gray-400">
@@ -71,7 +57,7 @@
         </div>
     </header>
 
-    <!-- Content Section -->
+    <!-- ================= MAIN CONTENT ================= -->
     <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
         
         <!-- Info Banner -->
@@ -82,93 +68,119 @@
                 </div>
                 <div class="ml-3">
                     <p class="text-sm text-yellow-700">
-                        <span class="font-bold">Info:</span> Semua transaksi dilakukan otomatis melalui panel bot Telegram kami. Klik tombol "Beli" untuk diarahkan.
+                        <span class="font-bold">Info:</span> Klik tombol "Beli" untuk memesan langsung melalui WhatsApp Admin.
                     </p>
                 </div>
             </div>
         </div>
 
-        <!-- Filter Stats -->
         <div class="flex justify-between items-center mb-6">
             <h2 class="text-xl font-semibold text-gray-800">Daftar Produk</h2>
-            <span class="text-sm text-gray-500 bg-white px-3 py-1 rounded-full shadow-sm border" id="productCount">Memuat data...</span>
+            <span class="text-sm text-gray-500 bg-white px-3 py-1 rounded-full shadow-sm border" id="productCount">Loading...</span>
         </div>
 
-        <!-- Product Grid -->
+        <!-- Grid Produk -->
         <div id="productGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Products will be injected here by JS -->
+            <!-- Produk akan muncul di sini via JS -->
         </div>
 
-        <!-- No Results State (Hidden by default) -->
+        <!-- Pesan Kosong -->
         <div id="noResults" class="hidden text-center py-12">
-            <div class="text-gray-400 text-6xl mb-4">
-                <i class="fa-regular fa-folder-open"></i>
-            </div>
+            <div class="text-gray-400 text-6xl mb-4"><i class="fa-regular fa-folder-open"></i></div>
             <h3 class="text-lg font-medium text-gray-900">Paket tidak ditemukan</h3>
             <p class="text-gray-500">Coba cari dengan kata kunci lain.</p>
         </div>
-
     </main>
 
     <!-- Footer -->
     <footer class="bg-gray-800 text-gray-300 py-8">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row justify-between items-center">
-                <div class="mb-4 md:mb-0">
-                    <span class="font-bold text-white text-lg">SRPCOM Store</span>
-                    <p class="text-sm mt-1">Provider solusi internet murah & terpercaya.</p>
-                </div>
-                <div class="flex space-x-6">
-                    <a href="https://t.me/srpcomstorebot" class="hover:text-white transition"><i class="fa-brands fa-telegram text-2xl"></i></a>
-                    <a href="#" class="hover:text-white transition"><i class="fa-brands fa-whatsapp text-2xl"></i></a>
-                    <a href="#" class="hover:text-white transition"><i class="fa-brands fa-instagram text-2xl"></i></a>
-                </div>
-            </div>
-            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-sm">
-                &copy; <script>document.write(new Date().getFullYear())</script> SRPCOM. All rights reserved.
-            </div>
+        <div class="max-w-7xl mx-auto px-4 text-center text-sm">
+            <p class="font-bold text-white text-lg mb-2">SRPCOM Store</p>
+            <p>&copy; <script>document.write(new Date().getFullYear())</script> All rights reserved.</p>
         </div>
     </footer>
 
-    <!-- JavaScript Logic -->
+    <!-- JAVASCRIPT LOGIC -->
     <script>
-        // Data Produk dari CSV (Saya hardcode agar file HTML ini mandiri/single-file)
+        // Data Produk Diperbarui sesuai CSV
         const products = [
             {
                 id: 1,
                 name: "XL Xtra Combo Flex S 14 HARI",
-                desc: "- Paket Resmi (OFFICIAL).\n- MASA AKTIF 14 HARI.\n- Bisa untuk semua Area.\n- Hanya bisa untuk XL Prepaid/Prabayar.\n- Kuota bersifat full reguler 24 jam.\n- Kuota utama 3.5GB.\n- Tidak wajib ada pulsa.\n- Jika transaksi status GAGAL maka saldo panel akan otomatis di-refund.",
+                desc: "- Paket Resmi (OFFICIAL).\n- MASA AKTIF 14 HARI.\n- Kuota utama 3.5GB.\n- Tidak wajib ada pulsa.\n- Jika transaksi status GAGAL maka saldo panel akan otomatis di-refund.",
                 price: 23600
             },
             {
                 id: 2,
                 name: "XL Xtra Combo Flex S 21 Hari",
-                desc: "- Paket Resmi (OFFICIAL).\n- MASA AKTIF 21 HARI.\n- Bisa untuk semua Area.\n- Hanya bisa untuk XL Prepaid/Prabayar.\n- Kuota bersifat full reguler 24 jam.\n- Kuota utama 3.5GB.\n- Tidak wajib ada pulsa.\n- Jika transaksi status GAGAL maka saldo panel akan otomatis di-refund.",
+                desc: "- Paket Resmi (OFFICIAL).\n- MASA AKTIF 21 HARI.\n- Kuota utama 3.5GB.\n- Tidak wajib ada pulsa.\n- Jika transaksi status GAGAL maka saldo panel akan otomatis di-refund.",
                 price: 26600
             },
             {
                 id: 3,
                 name: "XL Xtra Combo Flex S+ 28 Hari",
-                desc: "- Paket Resmi (OFFICIAL).\n- MASA AKTIF 28 HARI.\n- Bisa untuk semua Area.\n- Hanya bisa untuk XL Prepaid/Prabayar.\n- Kuota bersifat full reguler 24 jam.\n- Kuota utama 3GB + Bonus Lokal (jika beruntung).",
-                price: 33500 
+                desc: "- Paket Resmi (OFFICIAL).\n- MASA AKTIF 28 HARI.\n- Kuota utama 3GB + Bonus Lokal.\n- Tidak wajib ada pulsa.\n- Full Reguler 24 Jam.",
+                price: 36500 
+            },
+            {
+                id: 8,
+                name: "XL Xtra Combo Flex L 28 Hari",
+                desc: "- Paket Resmi (OFFICIAL).\n- MASA AKTIF 28 HARI.\n- Kuota Full Reguler.\n- Tidak ada bonus redeem.\n- Jika transaksi status GAGAL maka saldo panel akan otomatis di-refund.",
+                price: 57600
+            },
+            {
+                id: 12,
+                name: "XL Data FlexMax 6GB",
+                desc: "- Tidak Semua Nomor bisa SUKSES.\n- TIDAK PERLU KODE OTP.\n- Paket Resmi (OFFICIAL) jalur Sidompul.\n- MASA AKTIF 28 HARI.\n- Bisa untuk semua Area.\n- Hanya bisa untuk XL Prepaid/Prabayar.\n- Kuota bersifat full reguler 24 jam.\n- Tidak wajib ada pulsa.\n- Masa aktif 28 hari.\n- Tidak ada bonus redeem.\n- Jika transaksi status GAGAL maka saldo panel akan otomatis di-refund.",
+                price: 32400 
+            },
+            {
+                id: 13,
+                name: "XL Data FlexMax 10GB",
+                desc: "- Tidak Semua Nomor bisa SUKSES.\n- TIDAK PERLU KODE OTP.\n- Paket Resmi (OFFICIAL) jalur Sidompul.\n- MASA AKTIF 28 HARI.\n- Bisa untuk semua Area.\n- Hanya bisa untuk XL Prepaid/Prabayar.\n- Kuota bersifat full reguler 24 jam.\n- Tidak wajib ada pulsa.\n- Masa aktif 28 hari.\n- Tidak ada bonus redeem.\n- Jika transaksi status GAGAL maka saldo panel akan otomatis di-refund.",
+                price: 35600 
+            },
+            {
+                id: 14,
+                name: "XL Data FlexMax 15GB",
+                desc: "- Tidak Semua Nomor bisa SUKSES.\n- TIDAK PERLU KODE OTP.\n- Paket Resmi (OFFICIAL) jalur Sidompul.\n- MASA AKTIF 28 HARI.\n- Bisa untuk semua Area.\n- Hanya bisa untuk XL Prepaid/Prabayar.\n- Kuota bersifat full reguler 24 jam.\n- Tidak wajib ada pulsa.\n- Masa aktif 28 hari.\n- Tidak ada bonus redeem.\n- Jika transaksi status GAGAL maka saldo panel akan otomatis di-refund.",
+                price: 39600 
+            },
+            {
+                id: 15,
+                name: "XL Data FlexMax 20GB",
+                desc: "- Tidak Semua Nomor bisa SUKSES.\n- TIDAK PERLU KODE OTP.\n- Paket Resmi (OFFICIAL) jalur Sidompul.\n- MASA AKTIF 28 HARI.\n- Bisa untuk semua Area.\n- Hanya bisa untuk XL Prepaid/Prabayar.\n- Kuota bersifat full reguler 24 jam.\n- Tidak wajib ada pulsa.\n- Masa aktif 28 hari.\n- Tidak ada bonus redeem.\n- Jika transaksi status GAGAL maka saldo panel akan otomatis di-refund.",
+                price: 48600 
+            },
+            {
+                id: 16,
+                name: "XL Data FlexMax 25GB",
+                desc: "- Tidak Semua Nomor bisa SUKSES.\n- TIDAK PERLU KODE OTP.\n- Paket Resmi (OFFICIAL) jalur Sidompul.\n- MASA AKTIF 28 HARI.\n- Bisa untuk semua Area.\n- Hanya bisa untuk XL Prepaid/Prabayar.\n- Kuota bersifat full reguler 24 jam.\n- Tidak wajib ada pulsa.\n- Masa aktif 28 hari.\n- Tidak ada bonus redeem.\n- Jika transaksi status GAGAL maka saldo panel akan otomatis di-refund.",
+                price: 57600 
             },
             {
                 id: 9,
                 name: "XL Data FlexMax 32GB",
-                desc: "- Tidak Semua Nomor bisa SUKSES.\n- TIDAK PERLU KODE OTP.\n- Paket Resmi (OFFICIAL) jalur Sidompul.\n- MASA AKTIF 28 HARI.\n- Bisa untuk semua Area.\n- Hanya bisa untuk XL Prepaid/Prabayar.\n- Kuota bersifat full reguler 24 jam.\n- Tidak wajib ada pulsa.\n- Tidak ada bonus redeem.",
+                desc: "- TIDAK PERLU KODE OTP.\n- Paket Resmi (OFFICIAL) jalur Sidompul.\n- MASA AKTIF 28 HARI.\n- Kuota Full reguler 24 jam.\n- Tidak ada bonus redeem.\n- Jika transaksi status GAGAL maka saldo panel akan otomatis di-refund.",
                 price: 73600
             },
             {
                 id: 10,
                 name: "XL Data FlexMax 65 GB 28 Hari",
-                desc: "- Dapat digunakan untuk semua nomor XL Prabayar/Prepaid.\n- Kuota Utama 65GB 24 Jam (Nasional).\n- Tidak ada bonus redeem.\n- Masa aktif 28 hari.\n- Pastikan tidak ada paket FLEX jenis lainnya yang aktif agar aman.",
+                desc: "- Kuota Utama 65GB 24 Jam (Nasional).\n- Tidak ada bonus redeem.\n- Masa aktif 28 hari.\n- Pastikan tidak ada paket FLEX jenis lainnya yang aktif agar aman.",
                 price: 98600
             },
             {
                 id: 11,
                 name: "XL Data FlexMax 80 GB 28 Hari",
-                desc: "- Dapat digunakan untuk semua nomor XL Prabayar/Prepaid.\n- Kuota Utama 80GB 24 Jam (Nasional).\n- Tidak ada bonus redeem.\n- Masa aktif 28 hari.\n- Disarankan habiskan kuota lama sebelum isi yang baru.",
+                desc: "- Kuota Utama 80GB 24 Jam (Nasional).\n- Tidak ada bonus redeem.\n- Masa aktif 28 hari.\n- Disarankan habiskan kuota lama sebelum isi yang baru.",
                 price: 115000 
+            },
+            {
+                id: 17,
+                name: "XL Data FlexMax 150 GB 28 Hari",
+                desc: "- Dapat digunakan untuk semua nomor XL Prabayar/Prepaid.\n- Jika ditimpa/ditumpuk dengan flex mania beda jenis, maka sisa kuota sebelumnya akan hangus dan tergantikan yang baru, lebih amannya disarankan habiskan kuota terlebih dahulu baru isi lagi jika ingin isi ulang kuota flex maxnya.\n- Pastikan tidak ada paket FLEX jenis lainnya yang aktif agar aman.\n- Kuota yang akan didapat: Kuota Utama 150GB 24 Jam (Nasional).\n- Tidak ada bonus redeem.\n- Masa aktif 28 hari.",
+                price: 147600 
             }
         ];
 
@@ -177,7 +189,7 @@
         const noResults = document.getElementById('noResults');
         const productCount = document.getElementById('productCount');
 
-        // Format Rupiah untuk tampilan (Pakai Rp)
+        // Format Rupiah (Rp 23.600) - Untuk Tampilan
         const formatRupiah = (number) => {
             return new Intl.NumberFormat('id-ID', {
                 style: 'currency',
@@ -186,21 +198,18 @@
             }).format(number);
         };
 
-        // Format Angka Saja untuk WA (Tanpa Rp, sesuai request: "23.600")
-        const formatPriceNumber = (number) => {
+        // Format Angka (23.600) - Untuk WhatsApp
+        const formatNumber = (number) => {
             return new Intl.NumberFormat('id-ID').format(number);
         };
 
-        // Format Deskripsi menjadi List HTML
+        // Format Deskripsi menjadi List
         const formatDescription = (text) => {
             if (!text) return '';
-            // Memisahkan berdasarkan baris baru atau "- "
             const lines = text.split(/\n|- /).filter(line => line.trim() !== '');
-            
             let html = '<ul class="text-sm text-gray-600 space-y-1 mb-4">';
             lines.forEach(line => {
-                // Membersihkan karakter yang tidak perlu
-                const cleanLine = line.replace(/^"/, '').replace(/"$/, '').trim();
+                const cleanLine = line.replace(/^"/, '').replace(/"$/, '').replace(/^-/, '').trim();
                 if(cleanLine) {
                     html += `<li class="flex items-start"><i class="fa-solid fa-check text-green-500 mt-1 mr-2 text-xs"></i> <span class="flex-1">${cleanLine}</span></li>`;
                 }
@@ -223,9 +232,9 @@
 
             data.forEach(product => {
                 const card = document.createElement('div');
-                card.className = 'bg-white rounded-xl shadow border border-gray-100 flex flex-col transition duration-300 card-hover overflow-hidden';
+                card.className = 'bg-white rounded-xl shadow border border-gray-100 flex flex-col transition duration-300 card-hover overflow-hidden relative';
                 
-                // Menentukan badge berdasarkan nama paket
+                // Badge Kategori
                 let badge = '';
                 if(product.name.includes('FlexMax')) {
                     badge = '<span class="absolute top-0 right-0 bg-purple-100 text-purple-800 text-xs font-bold px-3 py-1 rounded-bl-lg">FlexMax</span>';
@@ -233,14 +242,13 @@
                     badge = '<span class="absolute top-0 right-0 bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-bl-lg">Combo Flex</span>';
                 }
 
-                // Persiapkan Link WhatsApp
-                // Format: Order XL Xtra Xomco Flex S 14 Hari yg harga 23.600
-                const waMessage = `Order ${product.name} yg harga ${formatPriceNumber(product.price)}`;
+                // Link WhatsApp
+                const waMessage = `Order ${product.name} yg harga ${formatNumber(product.price)}`;
                 const waLink = `https://wa.me/6282175037525?text=${encodeURIComponent(waMessage)}`;
 
                 card.innerHTML = `
-                    <div class="relative p-5 flex-grow">
-                        ${badge}
+                    ${badge}
+                    <div class="p-5 flex-grow">
                         <div class="flex items-center mb-3">
                             <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 font-bold mr-3">
                                 XL
@@ -271,7 +279,7 @@
             });
         };
 
-        // Event Listener untuk Search
+        // Event Listener Search
         searchInput.addEventListener('input', (e) => {
             const searchTerm = e.target.value.toLowerCase();
             const filteredProducts = products.filter(product => 
@@ -283,7 +291,6 @@
 
         // Initial Render
         renderProducts(products);
-
     </script>
 </body>
 </html>
