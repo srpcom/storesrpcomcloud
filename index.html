@@ -182,7 +182,8 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         adminToken = result.value; isAdmin = true;
-                        adminPanel.classList.remove('hidden'); renderProducts(products);
+                        adminPanel.classList.remove('hidden'); 
+                        applyFilters(); // Perbaikan: Gunakan applyFilters untuk re-render
                         Swal.fire('Login Berhasil', 'Mode Admin Aktif.', 'success');
                     } else { history.pushState("", document.title, window.location.pathname); }
                 });
@@ -194,7 +195,10 @@
                 loadingDiv.classList.remove('hidden'); productGrid.classList.add('hidden');
                 const response = await fetch(API_URL);
                 const result = await response.json();
-                if (result.status === 'success') { products = result.data; renderProducts(products); }
+                if (result.status === 'success') { 
+                    products = result.data; 
+                    applyFilters(); // Perbaikan: Langsung filter, jangan render semua
+                }
                 else { Swal.fire('Error', 'Gagal memuat data.', 'error'); }
             } catch (error) { Swal.fire('Koneksi Error', 'Gagal terhubung ke database.', 'error'); } 
             finally { loadingDiv.classList.add('hidden'); productGrid.classList.remove('hidden'); }
@@ -296,7 +300,12 @@
             let filtered = products.filter(p => {
                 const matchCat = currentCategory === 'all' || (p.category || (p.name.includes('FlexMax') ? 'flexmax' : 'combo')) === currentCategory;
                 const matchSearch = (p.name && p.name.toLowerCase().includes(term)) || (p.desc && p.desc.toLowerCase().includes(term));
+                
+                // Logic Filter Active:
+                // Jika Admin: Tampilkan semuanya (true)
+                // Jika User Biasa: Hanya tampilkan yang active == true
                 const matchActive = isAdmin ? true : (p.active === true || p.active === "true" || p.active === 1);
+                
                 return matchCat && matchSearch && matchActive;
             });
             renderProducts(filtered);
@@ -310,6 +319,8 @@
                 const isActive = (p.active === true || p.active === "true" || p.active === 1);
                 const card = document.createElement('div');
                 card.className = 'bg-white rounded-2xl shadow-sm hover:shadow-xl border border-gray-100 flex flex-col transition-all duration-300 card-hover overflow-hidden relative group animate-fade-in';
+                
+                // Tambahkan kelas abu-abu untuk item yang disembunyikan (Hanya terlihat Admin)
                 if (!isActive && isAdmin) card.classList.add('item-hidden');
 
                 const isFlexMax = (p.name && p.name.includes('FlexMax')) || p.category === 'flexmax';
