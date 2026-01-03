@@ -103,7 +103,7 @@
                 <i class="fa-solid fa-circle-info text-lg"></i>
             </div>
             <div class="text-sm text-gray-700">
-                <span class="font-bold block sm:inline">Info:</span> Klik <b>Judul Paket</b> atau tombol <b>Beli</b> untuk memilih metode order.
+                <span class="font-bold block sm:inline">Info:</span> Klik <b>Judul Paket</b> atau tombol <b>Beli</b> untuk melakukan pembayaran via QRIS.
             </div>
         </div>
 
@@ -183,7 +183,7 @@
                     if (result.isConfirmed) {
                         adminToken = result.value; isAdmin = true;
                         adminPanel.classList.remove('hidden'); 
-                        applyFilters(); // Perbaikan: Gunakan applyFilters untuk re-render
+                        applyFilters(); 
                         Swal.fire('Login Berhasil', 'Mode Admin Aktif.', 'success');
                     } else { history.pushState("", document.title, window.location.pathname); }
                 });
@@ -197,7 +197,7 @@
                 const result = await response.json();
                 if (result.status === 'success') { 
                     products = result.data; 
-                    applyFilters(); // Perbaikan: Langsung filter, jangan render semua
+                    applyFilters(); 
                 }
                 else { Swal.fire('Error', 'Gagal memuat data.', 'error'); }
             } catch (error) { Swal.fire('Koneksi Error', 'Gagal terhubung ke database.', 'error'); } 
@@ -222,7 +222,6 @@
             openProductModal('Tambah Paket Baru', 'add');
         }
 
-        // FUNGSI BARU: Buka Modal Edit dengan data terisi
         function showEditProductModal(id) {
             const product = products.find(p => p.id.toString() === id.toString());
             if (!product) return;
@@ -301,9 +300,7 @@
                 const matchCat = currentCategory === 'all' || (p.category || (p.name.includes('FlexMax') ? 'flexmax' : 'combo')) === currentCategory;
                 const matchSearch = (p.name && p.name.toLowerCase().includes(term)) || (p.desc && p.desc.toLowerCase().includes(term));
                 
-                // Logic Filter Active:
-                // Jika Admin: Tampilkan semuanya (true)
-                // Jika User Biasa: Hanya tampilkan yang active == true
+                // Logic Filter Active
                 const matchActive = isAdmin ? true : (p.active === true || p.active === "true" || p.active === 1);
                 
                 return matchCat && matchSearch && matchActive;
@@ -320,7 +317,6 @@
                 const card = document.createElement('div');
                 card.className = 'bg-white rounded-2xl shadow-sm hover:shadow-xl border border-gray-100 flex flex-col transition-all duration-300 card-hover overflow-hidden relative group animate-fade-in';
                 
-                // Tambahkan kelas abu-abu untuk item yang disembunyikan (Hanya terlihat Admin)
                 if (!isActive && isAdmin) card.classList.add('item-hidden');
 
                 const isFlexMax = (p.name && p.name.includes('FlexMax')) || p.category === 'flexmax';
@@ -330,7 +326,6 @@
 
                 const safeName = p.name ? p.name.replace(/'/g, "\\'") : 'Tanpa Nama';
                 
-                // TOMBOL ADMIN (EDIT & HIDE)
                 let adminControls = '';
                 if (isAdmin) {
                     const toggleBtn = isActive 
@@ -355,7 +350,7 @@
                     <div class="bg-gray-50/50 p-5 border-t border-gray-100 mt-auto backdrop-blur-sm">
                         <div class="flex justify-between items-end">
                             <div><p class="text-[11px] uppercase tracking-wider text-gray-400 font-semibold mb-1">Harga Terbaik</p><p class="text-2xl font-bold text-gray-800">${formatRupiah(p.price)}</p></div>
-                            <button onclick="showOrderOptions('${safeName}', ${p.price})" class="bg-green-500 hover:bg-green-600 text-white font-medium py-2.5 px-6 rounded-xl shadow-lg shadow-green-500/20 transition-all hover:-translate-y-1 flex items-center gap-2"><i class="fa-brands fa-whatsapp text-lg"></i><span>Beli</span></button>
+                            <button onclick="showOrderOptions('${safeName}', ${p.price})" class="bg-green-500 hover:bg-green-600 text-white font-medium py-2.5 px-6 rounded-xl shadow-lg shadow-green-500/20 transition-all hover:-translate-y-1 flex items-center gap-2"><i class="fa-solid fa-qrcode text-lg"></i><span>Beli</span></button>
                         </div>
                     </div>
                 `;
@@ -363,14 +358,60 @@
             });
         }
 
+        // --- UPDATED SHOW ORDER OPTIONS (DIRECT PAYMENT) ---
         function showOrderOptions(name, price) {
-            const msg = `Order ${name} yg harga ${new Intl.NumberFormat('id-ID').format(price)}`;
+            const formattedPrice = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(price);
+            
+            // Link Konfirmasi WhatsApp (Pesan otomatis)
+            const waMessage = `Halo Admin, saya sudah melakukan pembayaran untuk order ${name} senilai ${formattedPrice}. Mohon diproses.`;
+            const waLink = `https://wa.me/6282175037525?text=${encodeURIComponent(waMessage)}`;
+            
+            // Link Konfirmasi Telegram
+            const tgLink = `https://t.me/srpcomstorebot`;
+
             Swal.fire({
                 title: `<span class="text-lg font-bold text-gray-800">${name}</span>`,
-                html: `<div class="text-center mb-4 text-gray-500">Pilih metode pembelian:</div><div class="flex flex-col gap-3"><a href="https://wa.me/6282175037525?text=${encodeURIComponent(msg)}" target="_blank" class="flex items-center justify-center gap-3 bg-green-500 text-white p-3.5 rounded-xl hover:bg-green-600 transition shadow-md"><i class="fa-brands fa-whatsapp text-2xl"></i><div class="text-left leading-tight"><div class="font-bold text-sm">Order via WhatsApp</div><div class="text-[10px] text-green-100 opacity-90">Chat Admin Manual</div></div></a><a href="https://t.me/srpcomstorebot" target="_blank" class="flex items-center justify-center gap-3 bg-blue-500 text-white p-3.5 rounded-xl hover:bg-blue-600 transition shadow-md"><i class="fa-brands fa-telegram text-2xl"></i><div class="text-left leading-tight"><div class="font-bold text-sm">Order via Telegram</div><div class="text-[10px] text-blue-100 opacity-90">Otomatis via Bot</div></div></a></div>`,
-                showConfirmButton: false, showCloseButton: true, width: '400px', customClass: { popup: 'rounded-2xl shadow-xl' }
+                html: `
+                    <div class="text-center text-gray-600 mb-4">
+                        <p class="mb-3 text-sm">Silakan lakukan pembayaran ke QRIS di bawah ini sejumlah:</p>
+                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-2 mb-4 inline-block">
+                            <span class="text-2xl font-bold text-blue-700">${formattedPrice}</span>
+                        </div>
+                        
+                        <!-- Gambar QRIS -->
+                        <div class="flex justify-center mb-4">
+                            <img src="https://github.com/srpcom/regulerxl/blob/main/qris%20srpcom.jpg?raw=true" 
+                                 alt="QRIS SRPCOM" 
+                                 class="max-w-full h-auto rounded-lg border border-gray-200 shadow-sm"
+                                 style="max-height: 250px;">
+                        </div>
+                        
+                        <p class="text-xs text-gray-400 mb-4">
+                            <i class="fa-solid fa-shield-halved"></i> Valid untuk semua E-Wallet & Bank
+                        </p>
+                        
+                        <p class="text-sm font-bold text-gray-700 mb-2">Sudah Transfer?</p>
+                    </div>
+
+                    <!-- Tombol Konfirmasi -->
+                    <div class="flex flex-col gap-3">
+                        <a href="${waLink}" target="_blank" class="flex items-center justify-center gap-2 bg-green-500 text-white py-3 rounded-xl hover:bg-green-600 transition shadow-md font-bold group">
+                            <i class="fa-brands fa-whatsapp text-xl"></i>
+                            Konfirmasi via WhatsApp
+                        </a>
+                        <a href="${tgLink}" target="_blank" class="flex items-center justify-center gap-2 bg-blue-500 text-white py-3 rounded-xl hover:bg-blue-600 transition shadow-md font-bold group">
+                            <i class="fa-brands fa-telegram text-xl"></i>
+                            AUTO ORDER VIA BOT TELEGRAM
+                        </a>
+                    </div>
+                `,
+                showConfirmButton: false,
+                showCloseButton: true,
+                width: '450px',
+                customClass: { popup: 'rounded-2xl shadow-xl' }
             });
         }
+
         function showCaraOrder() {
              Swal.fire({
                 title: '<span class="text-2xl font-bold text-gray-800">Cara Order</span>',
