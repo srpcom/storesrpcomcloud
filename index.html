@@ -49,8 +49,13 @@
 </head>
 <body class="flex flex-col min-h-screen">
 
-    <!-- ADMIN FLOATING BUTTON -->
-    <div id="adminPanel" class="fixed bottom-6 right-6 z-50 hidden">
+    <!-- ADMIN FLOATING BUTTONS -->
+    <div id="adminPanel" class="fixed bottom-6 right-6 z-50 hidden flex flex-col gap-3">
+        <!-- Tombol Logout -->
+        <button onclick="logoutAdmin()" class="bg-gray-600 hover:bg-gray-700 text-white w-14 h-14 rounded-full shadow-lg flex items-center justify-center transition-transform hover:scale-110 tooltip" title="Logout">
+            <i class="fa-solid fa-right-from-bracket text-xl"></i>
+        </button>
+        <!-- Tombol Tambah -->
         <button onclick="showAddProductModal()" class="bg-blue-600 hover:bg-blue-700 text-white w-14 h-14 rounded-full shadow-lg flex items-center justify-center transition-transform hover:scale-110 tooltip" title="Tambah Paket">
             <i class="fa-solid fa-plus text-2xl"></i>
         </button>
@@ -159,6 +164,8 @@
     <!-- LOGIC -->
     <script>
         const API_URL = 'https://script.google.com/macros/s/AKfycbz4gbnPcFxyv48mAfnWhkiBqFW7l9Ju-j_FDP8Kkirk_nPEVMdPgoXy4fieUvhFujMK/exec';
+        const APP_PASSWORD = 'srpcom'; // Password Admin untuk verifikasi di sisi Client
+
         let products = [];
         let currentCategory = 'all';
         let isAdmin = false;
@@ -175,19 +182,65 @@
         window.onhashchange = checkAdminHash;
 
         function checkAdminHash() {
-            if (window.location.hash === '#admin' && !isAdmin) {
+            // Cek jika URL mengandung #admin dan user belum login
+            if (window.location.hash === '#admin') {
+                if (isAdmin) {
+                    // Jika sudah login tapi refresh halaman (hash masih ada), pastikan panel muncul
+                    adminPanel.classList.remove('hidden');
+                    return;
+                }
+
                 Swal.fire({
-                    title: 'Admin Login', input: 'password', inputPlaceholder: 'Masukkan password admin',
-                    showCancelButton: true, confirmButtonText: 'Login', allowOutsideClick: false
+                    title: 'Admin Login', 
+                    input: 'password', 
+                    inputPlaceholder: 'Masukkan password admin',
+                    showCancelButton: true, 
+                    confirmButtonText: 'Login', 
+                    allowOutsideClick: false
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        adminToken = result.value; isAdmin = true;
-                        adminPanel.classList.remove('hidden'); 
-                        applyFilters(); 
-                        Swal.fire('Login Berhasil', 'Mode Admin Aktif.', 'success');
-                    } else { history.pushState("", document.title, window.location.pathname); }
+                        // VALIDASI PASSWORD
+                        if (result.value === APP_PASSWORD) {
+                            adminToken = result.value; 
+                            isAdmin = true;
+                            adminPanel.classList.remove('hidden'); 
+                            applyFilters(); 
+                            Swal.fire('Login Berhasil', 'Mode Admin Aktif.', 'success');
+                        } else {
+                            // Password Salah
+                            Swal.fire('Login Gagal', 'Password salah!', 'error').then(() => {
+                                // Hapus hash #admin dari URL
+                                history.pushState("", document.title, window.location.pathname);
+                            });
+                        }
+                    } else { 
+                        // Jika dicancel
+                        history.pushState("", document.title, window.location.pathname); 
+                    }
                 });
             }
+        }
+
+        // FUNGSI LOGOUT BARU
+        function logoutAdmin() {
+            Swal.fire({
+                title: 'Logout?',
+                text: "Anda akan keluar dari mode admin.",
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Ya, Logout',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    isAdmin = false;
+                    adminToken = '';
+                    adminPanel.classList.add('hidden');
+                    // Hapus hash #admin
+                    history.pushState("", document.title, window.location.pathname);
+                    applyFilters(); // Re-render untuk menyembunyikan fitur admin
+                    Swal.fire('Logout Berhasil', 'Anda kembali ke mode pengunjung.', 'success');
+                }
+            });
         }
 
         async function fetchProducts() {
@@ -439,4 +492,3 @@
     </script>
 </body>
 </html>
-
