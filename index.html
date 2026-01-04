@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daftar Harga Paket XL - SRPCOM Store</title>
+    <title>SRPCOM Store - Solusi Digital Terlengkap</title>
     
     <!-- Meta Tags -->
-    <meta name="description" content="Daftar harga paket data XL Reguler termurah dan terpercaya tanpa OTP di SRPCOM Store.">
+    <meta name="description" content="Pusat belanja produk digital termurah: Paket Data, VPN Premium, Topup Game, dan Akun Streaming Terpercaya.">
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -19,16 +19,20 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; }
-        .card-hover:hover { transform: translateY(-4px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
-        .gradient-header { background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%); }
+        body { font-family: 'Inter', sans-serif; background-color: #fef2f2; } /* Red-50 tint */
+        .card-hover { transition: all 0.3s ease; }
+        .card-hover:hover { transform: translateY(-4px); box-shadow: 0 10px 25px -5px rgba(220, 38, 38, 0.15); }
+        
+        /* New Gradient for General Store (Red Theme) */
+        .gradient-header { background: linear-gradient(135deg, #991b1b 0%, #ef4444 100%); }
+        
         .swal2-html-container { text-align: left !important; }
         .swal2-popup { border-radius: 1rem !important; }
         nav { transition: background-color 0.3s ease, backdrop-filter 0.3s ease; }
         
         .loader {
             border: 4px solid #f3f3f3;
-            border-top: 4px solid #3498db;
+            border-top: 4px solid #dc2626; /* Red-600 */
             border-radius: 50%;
             width: 40px; height: 40px;
             animation: spin 1s linear infinite;
@@ -45,12 +49,17 @@
             background-color: #f3f4f6;
             border: 2px dashed #cbd5e1;
         }
+
+        /* Category Button Styles (Red Theme) */
+        .cat-btn-active { background-color: #dc2626; color: white; box-shadow: 0 4px 6px -1px rgba(220, 38, 38, 0.3); }
+        .cat-btn-inactive { background-color: white; color: #475569; border: 1px solid #e2e8f0; }
+        .cat-btn-inactive:hover { background-color: #fef2f2; border-color: #fca5a5; }
     </style>
 </head>
 <body class="flex flex-col min-h-screen">
 
     <!-- ADMIN FLOATING BUTTONS -->
-    <div id="adminPanel" class="fixed bottom-6 right-6 z-50 hidden flex flex-col gap-3">
+    <div id="adminPanel" class="fixed bottom-6 right-6 z-50 hidden flex flex-col gap-3 animate-fade-in-up">
         <!-- Tombol Ganti Password -->
         <button onclick="changePasswordModal()" class="bg-yellow-500 hover:bg-yellow-600 text-white w-14 h-14 rounded-full shadow-lg flex items-center justify-center transition-transform hover:scale-110 tooltip" title="Ganti Password">
             <i class="fa-solid fa-key text-xl"></i>
@@ -60,23 +69,23 @@
             <i class="fa-solid fa-right-from-bracket text-xl"></i>
         </button>
         <!-- Tombol Tambah -->
-        <button onclick="showAddProductModal()" class="bg-blue-600 hover:bg-blue-700 text-white w-14 h-14 rounded-full shadow-lg flex items-center justify-center transition-transform hover:scale-110 tooltip" title="Tambah Paket">
+        <button onclick="showAddProductModal()" class="bg-red-600 hover:bg-red-700 text-white w-14 h-14 rounded-full shadow-lg flex items-center justify-center transition-transform hover:scale-110 tooltip" title="Tambah Produk">
             <i class="fa-solid fa-plus text-2xl"></i>
         </button>
     </div>
 
     <!-- NAVBAR -->
-    <nav class="bg-white/70 backdrop-blur-lg border-b border-white/20 sticky top-0 z-40 shadow-sm supports-[backdrop-filter]:bg-white/60">
+    <nav class="bg-white/80 backdrop-blur-md border-b border-red-100 sticky top-0 z-40 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
                 <div class="flex items-center group cursor-pointer" onclick="window.location.reload()">
-                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-50 to-blue-100 flex items-center justify-center mr-3 shadow-inner group-hover:scale-105 transition-transform duration-300">
-                        <i class="fa-solid fa-signal text-blue-600 text-lg"></i>
+                    <div class="w-10 h-10 rounded-xl bg-red-600 flex items-center justify-center mr-3 shadow-md shadow-red-200 group-hover:scale-105 transition-transform duration-300">
+                        <i class="fa-solid fa-store text-white text-lg"></i>
                     </div>
-                    <span class="font-bold text-xl text-gray-800 tracking-tight">SRPCOM Store</span>
+                    <span class="font-bold text-xl text-gray-800 tracking-tight">SRPCOM <span class="text-red-600">Store</span></span>
                 </div>
                 <div>
-                    <a href="https://t.me/srpcomstorebot" target="_blank" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-full text-sm font-medium transition duration-200 shadow-md shadow-blue-500/30 flex items-center gap-2">
+                    <a href="https://t.me/srpcomstorebot" target="_blank" class="bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-full text-sm font-medium transition duration-200 shadow-lg shadow-red-500/30 flex items-center gap-2">
                         <i class="fa-brands fa-telegram text-lg"></i> 
                         <span class="hidden sm:inline">Buka Bot</span>
                     </a>
@@ -86,17 +95,25 @@
     </nav>
 
     <!-- HERO -->
-    <header class="gradient-header text-white py-12 md:py-16 -mt-[1px]"> 
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-4">
-            <h1 class="text-3xl md:text-5xl font-bold mb-4 drop-shadow-md">Paket Data XL Reguler</h1>
-            <p class="text-blue-100 text-lg md:text-xl max-w-2xl mx-auto mb-8 font-light">
-                Solusi paket data murah tanpa OTP. Resmi, Aman, dan Terpercaya.
+    <header class="gradient-header text-white py-12 md:py-20 -mt-[1px] relative overflow-hidden"> 
+        <!-- Background Pattern -->
+        <div class="absolute top-0 left-0 w-full h-full opacity-10">
+             <i class="fa-solid fa-wifi absolute top-10 left-10 text-6xl"></i>
+             <i class="fa-solid fa-gamepad absolute bottom-10 right-10 text-8xl"></i>
+             <i class="fa-solid fa-shield-halved absolute top-20 right-20 text-5xl"></i>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <span class="bg-red-500/30 text-red-50 py-1 px-3 rounded-full text-xs font-semibold mb-4 inline-block border border-red-400/30">Trusted Digital Store</span>
+            <h1 class="text-3xl md:text-5xl font-bold mb-4 drop-shadow-xl tracking-tight">Solusi Kebutuhan Digital</h1>
+            <p class="text-red-100 text-lg md:text-xl max-w-2xl mx-auto mb-8 font-light">
+                Menyediakan Paket Data, VPN Premium, Topup Game, dan Akun Streaming dengan harga terbaik.
             </p>
             <div class="max-w-xl mx-auto relative group">
-                <div class="absolute -inset-1 bg-blue-300 rounded-full blur opacity-25 group-hover:opacity-50 transition duration-200"></div>
-                <input type="text" id="searchInput" placeholder="Cari nama paket (contoh: 15GB)..." 
-                    class="relative w-full px-6 py-4 rounded-full text-gray-800 shadow-xl focus:outline-none focus:ring-4 focus:ring-blue-400/50 transition placeholder-gray-400 border-none">
-                <button class="absolute right-3 top-3 bg-blue-600 text-white p-2 rounded-full w-10 h-10 flex items-center justify-center hover:bg-blue-700 transition shadow-lg z-10">
+                <div class="absolute -inset-1 bg-red-500 rounded-full blur opacity-40 group-hover:opacity-60 transition duration-200"></div>
+                <input type="text" id="searchInput" placeholder="Cari produk (contoh: VPN, Mobile Legends, 15GB)..." 
+                    class="relative w-full px-6 py-4 rounded-full text-gray-800 shadow-xl focus:outline-none focus:ring-4 focus:ring-red-500/30 transition placeholder-gray-400 border-none">
+                <button class="absolute right-3 top-3 bg-red-600 text-white p-2 rounded-full w-10 h-10 flex items-center justify-center hover:bg-red-700 transition shadow-lg z-10">
                     <i class="fa-solid fa-search"></i>
                 </button>
             </div>
@@ -107,60 +124,65 @@
     <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 w-full">
         
         <!-- Info Banner -->
-        <div class="bg-white/80 backdrop-blur-sm border-l-4 border-yellow-400 p-4 mb-8 rounded-r-lg shadow-sm flex items-start sm:items-center gap-3">
-            <div class="flex-shrink-0 text-yellow-500 bg-yellow-100 p-2 rounded-full">
-                <i class="fa-solid fa-circle-info text-lg"></i>
+        <div class="bg-white border-l-4 border-red-500 p-4 mb-8 rounded-r-xl shadow-sm flex items-start sm:items-center gap-4 hover:shadow-md transition-shadow">
+            <div class="flex-shrink-0 text-red-600 bg-red-50 p-3 rounded-full">
+                <i class="fa-solid fa-bullhorn text-lg"></i>
             </div>
-            <div class="text-sm text-gray-700">
-                <span class="font-bold block sm:inline">Info:</span> Klik <b>Judul Paket</b> atau tombol <b>Beli</b> untuk melakukan pembayaran via QRIS.
+            <div class="text-sm text-gray-600">
+                <span class="font-bold text-gray-800 block sm:inline mb-1 sm:mb-0">Update Terbaru:</span> 
+                Kini tersedia <span class="font-bold text-red-600">VPN Premium</span> & <span class="font-bold text-red-600">Topup Game</span>. Metode pembayaran QRIS otomatis.
             </div>
         </div>
 
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
             <h2 class="text-2xl font-bold text-gray-800 flex items-center gap-2">
-                <i class="fa-solid fa-tags text-blue-600"></i> Daftar Produk
+                <i class="fa-solid fa-layer-group text-red-600"></i> Katalog Produk
             </h2>
-            <span class="text-sm font-medium text-blue-600 bg-blue-50 px-4 py-1.5 rounded-full shadow-sm border border-blue-100" id="productCount">Loading...</span>
+            <span class="text-xs font-bold text-red-600 bg-red-50 px-3 py-1.5 rounded-full border border-red-100" id="productCount">Loading...</span>
         </div>
 
         <!-- Filter Tabs -->
-        <div class="flex space-x-2 mb-8 overflow-x-auto pb-2 scrollbar-hide -mx-4 px-4 sm:mx-0 sm:px-0" id="categoryTabs">
-            <button onclick="filterCategory('all')" class="category-btn active whitespace-nowrap px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 bg-blue-600 text-white shadow-md shadow-blue-200">Semua Paket</button>
-            <button onclick="filterCategory('flexmax')" class="category-btn whitespace-nowrap px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 bg-white text-gray-600 border border-gray-200 hover:bg-gray-50 hover:border-blue-300">FlexMax</button>
-            <button onclick="filterCategory('combo')" class="category-btn whitespace-nowrap px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 bg-white text-gray-600 border border-gray-200 hover:bg-gray-50 hover:border-blue-300">Combo Flex</button>
+        <div class="flex space-x-2 mb-8 overflow-x-auto pb-4 scrollbar-hide -mx-4 px-4 sm:mx-0 sm:px-0" id="categoryTabs">
+            <button onclick="filterCategory('all')" class="category-btn cat-btn-active whitespace-nowrap px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-300">Semua</button>
+            <button onclick="filterCategory('internet')" class="category-btn cat-btn-inactive whitespace-nowrap px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300"><i class="fa-solid fa-wifi mr-1"></i> Internet</button>
+            <button onclick="filterCategory('vpn')" class="category-btn cat-btn-inactive whitespace-nowrap px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300"><i class="fa-solid fa-shield-halved mr-1"></i> VPN/SSH</button>
+            <button onclick="filterCategory('apps')" class="category-btn cat-btn-inactive whitespace-nowrap px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300"><i class="fa-brands fa-youtube mr-1"></i> Akun Premium</button>
+            <button onclick="filterCategory('game')" class="category-btn cat-btn-inactive whitespace-nowrap px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300"><i class="fa-solid fa-gamepad mr-1"></i> Games</button>
         </div>
 
         <!-- Loader & Grid -->
-        <div id="loading" class="text-center py-12">
+        <div id="loading" class="text-center py-20">
             <div class="loader"></div>
-            <p class="text-gray-500 mt-4">Mengambil data terbaru dari server...</p>
+            <p class="text-gray-500 mt-4 text-sm font-medium">Sedang memuat katalog terbaik...</p>
         </div>
+        
         <div id="productGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 hidden"></div>
-        <div id="noResults" class="hidden text-center py-16">
-            <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
-                <i class="fa-regular fa-folder-open text-gray-400 text-4xl"></i>
+        
+        <div id="noResults" class="hidden text-center py-20 bg-white rounded-2xl border border-gray-100 shadow-sm">
+            <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fa-solid fa-box-open text-gray-400 text-3xl"></i>
             </div>
-            <h3 class="text-lg font-bold text-gray-900">Paket tidak ditemukan</h3>
-            <p class="text-gray-500 mt-1">Coba cari dengan kata kunci lain atau ubah kategori.</p>
+            <h3 class="text-lg font-bold text-gray-900">Produk tidak ditemukan</h3>
+            <p class="text-gray-500 mt-1 text-sm">Coba cari di kategori lain atau gunakan kata kunci berbeda.</p>
         </div>
     </main>
 
     <!-- Footer -->
     <footer class="bg-gray-900 text-gray-300 py-12 border-t border-gray-800 relative overflow-hidden">
-        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-50"></div>
+        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-red-600 to-transparent opacity-50"></div>
         <div class="max-w-7xl mx-auto px-4 text-center relative z-10">
             <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mb-10">
-                <button onclick="showCaraOrder()" class="w-full sm:w-auto px-8 py-3.5 rounded-full bg-gray-800/50 hover:bg-gray-800 text-gray-300 hover:text-white border border-gray-700 hover:border-gray-600 transition-all flex items-center justify-center gap-3 group backdrop-blur-sm">
-                    <div class="bg-gray-700 p-1.5 rounded-full group-hover:bg-gray-600 transition-colors"><i class="fa-solid fa-circle-question text-blue-400"></i></div>
-                    <span class="font-medium">Cara Order</span>
+                <button onclick="showCaraOrder()" class="w-full sm:w-auto px-8 py-3.5 rounded-full bg-gray-800 hover:bg-gray-700 text-gray-300 hover:text-white border border-gray-700 hover:border-gray-600 transition-all flex items-center justify-center gap-3 group">
+                    <i class="fa-solid fa-circle-question text-red-500 group-hover:scale-110 transition-transform"></i>
+                    <span class="font-medium">Panduan Order</span>
                 </button>
-                <a href="https://t.me/srpcomgroup" target="_blank" class="w-full sm:w-auto px-8 py-3.5 rounded-full bg-gradient-to-r from-blue-600 to-blue-500 text-white flex items-center justify-center gap-3 shadow-lg shadow-blue-500/25 group hover:-translate-y-1">
+                <a href="https://t.me/srpcomgroup" target="_blank" class="w-full sm:w-auto px-8 py-3.5 rounded-full bg-red-600 hover:bg-red-500 text-white flex items-center justify-center gap-3 shadow-lg shadow-red-600/30 group hover:-translate-y-1 transition-all">
                     <i class="fa-brands fa-telegram text-xl group-hover:rotate-12 transition-transform"></i>
-                    <span class="font-bold tracking-wide">JOIN Group</span>
+                    <span class="font-bold tracking-wide">Gabung Grup</span>
                 </a>
             </div>
-            <div class="text-xs text-gray-500 font-light border-t border-gray-800 pt-8 mt-4">
-                &copy; <script>document.write(new Date().getFullYear())</script> SRPCOM Store.
+            <div class="text-xs text-gray-500 font-light pt-8 mt-4 border-t border-gray-800">
+                &copy; <script>document.write(new Date().getFullYear())</script> SRPCOM Store. All Rights Reserved.
             </div>
         </div>
     </footer>
@@ -184,15 +206,13 @@
         window.onload = () => { checkAdminHash(); fetchProducts(); };
         window.onhashchange = checkAdminHash;
 
-        // FUNGSI LOGIN (Updated)
+        // --- AUTH SYSTEM ---
         function checkAdminHash() {
             if (window.location.hash === '#admin') {
                 if (isAdmin) {
                     adminPanel.classList.remove('hidden');
                     return;
                 }
-                
-                // Panggil prompt login
                 promptLogin();
             }
         }
@@ -203,60 +223,17 @@
                 text: errorMessage ? errorMessage : 'Masukkan password admin',
                 input: 'password',
                 inputPlaceholder: 'Password',
-                icon: errorMessage ? 'error' : null,
+                icon: errorMessage ? 'error' : 'lock',
                 showCancelButton: true,
-                confirmButtonText: 'Login',
+                confirmButtonText: 'Masuk',
+                confirmButtonColor: '#dc2626', // Red
                 allowOutsideClick: false,
-                didOpen: () => {
-                    // Fokus ke input
-                    if(errorMessage) Swal.getInput().focus();
-                }
+                didOpen: () => { if(errorMessage) Swal.getInput().focus(); }
             }).then((result) => {
                 if (result.isConfirmed) {
-                    const enteredPass = result.value;
-                    
-                    // Tampilkan Loading saat verifikasi ke server
                     Swal.fire({ title: 'Memverifikasi...', didOpen: () => Swal.showLoading() });
-
-                    // Kirim ke API untuk cek password
-                    fetch(API_URL, {
-                        method: 'POST', mode: 'no-cors', // no-cors di GAS tidak bisa return JSON body langsung :(
-                        // TAPI: Untuk verifikasi kita butuh return value.
-                        // Sayangnya, 'no-cors' membatasi kita membaca response body.
-                        // SOLUSI ALTERNATIF UNTUK GAS + STATIC HTML:
-                        // Kita gunakan endpoint doGet dengan parameter khusus atau asumsi optimis
-                        // Karena keterbatasan CORS GAS, cara terbaik tanpa proxy adalah:
-                        // Kita simpan password di variabel JS (TIDAK AMAN) -> User minta di gsheet.
-                        // MAKA: Kita harus gunakan metode fetch normal tapi perlu setup CORS di GAS.
-                        // Karena GAS default redirect, fetch sulit.
-                        // WORKAROUND: Kita kirim POST, jika berhasil tidak error. 
-                        // TAPI Login butuh feedback immediate.
-                        
-                        // KITA AKAN GUNAKAN HACK: Gunakan 'action: login' via POST 
-                        // Dan berharap network tidak error. Tapi return body tidak terbaca di no-cors.
-                        
-                        // SOLUSI PALING STABIL DI LINGKUNGAN INI:
-                        // Kita gunakan doGet untuk validasi login (karena doGet bisa return JSONP/JSON text).
-                        // Tapi GET mengekspos password di URL log.
-                        // Oke, kita akan gunakan POST 'no-cors' lalu cek efek samping? Tidak bisa.
-                        
-                        // REVISI PENDEKATAN: 
-                        // Kita terpaksa gunakan flow: Kirim request -> Tunggu.
-                        // Karena limitasi CORS GAS Web App, kita akan gunakan teknik 'redirect' atau JSONP.
-                        // TAPI, agar simpel & sesuai request "Gunakan Google Sheet", kita asumsikan 
-                        // password tetap "srpcom" untuk inisialisasi awal, lalu admin ganti.
-                        // NAMUN, user minta "password tersimpan di gsheet".
-                        
-                        // OK, Solusi 'redirect' `fetch` dengan `redirect: 'follow'` biasanya bekerja untuk GAS GET.
-                        // Mari coba gunakan GET untuk login karena hanya kirim string pendek.
-                    });
-                    
-                    // --- IMPLEMENTASI LOGIN VIA GET (Untuk bypass CORS issue di simple fetch) ---
-                    // Note: Mengirim password via GET kurang aman, tapi satu-satunya cara reliable
-                    // baca response JSON dari GAS tanpa proxy server.
-                    verifyPasswordViaGet(enteredPass);
+                    verifyPasswordViaGet(result.value);
                 } else {
-                    // Cancel
                     history.pushState("", document.title, window.location.pathname);
                 }
             });
@@ -264,26 +241,10 @@
 
         async function verifyPasswordViaGet(password) {
             try {
-                // Kita modifikasi backend doGet sedikit (di backend tidak saya ubah logicnya, 
-                // tapi kita bisa manfaatkan doGet yang mengembalikan semua data).
-                // TAPI, kita butuh endpoint khusus.
-                // KARENA Code.gs doGet saya buat return data produk, kita tidak bisa pakai itu untuk auth khusus.
-                
-                // KITA AKAN GUNAKAN CARA POST & POLLING atau POST & ERROR HANDLING? Tidak.
-                
-                // OK, kita akan gunakan trik `doPost` yang sudah saya buat di Code.gs.
-                // `doPost` me-return `ContentService.createTextOutput` JSON.
-                // Jika kita fetch dengan `redirect: follow`, kita mungkin bisa baca textnya.
-                
-                // Coba fetch normal (akan kena CORS biasanya, tapi mari coba parsing).
                 const response = await fetch(API_URL, {
                     method: 'POST',
                     body: JSON.stringify({ action: 'login', password: password })
-                    // Hapus mode: 'no-cors' untuk mencoba baca response. 
-                    // Jika GAS dideploy sebagai "Anyone", CORS biasanya allowed untuk simple request.
-                    // Content-Type text/plain agar tidak preflight.
                 });
-                
                 const result = await response.json();
                 
                 if (result.status === 'success') {
@@ -291,21 +252,16 @@
                     isAdmin = true;
                     adminPanel.classList.remove('hidden');
                     applyFilters();
-                    Swal.fire('Login Berhasil', 'Mode Admin Aktif', 'success');
+                    Swal.fire({title: 'Login Berhasil', icon: 'success', timer: 1500, showConfirmButton: false});
                 } else {
-                    // Password Salah -> Loop
                     promptLogin("Password salah! Silakan ulangi.");
                 }
-
             } catch (e) {
-                // Fallback jika CORS memblokir atau error lain
-                // Kita asumsikan error = password salah atau koneksi
                 console.error(e);
-                promptLogin("Gagal terhubung server atau Password Salah. Coba lagi.");
+                promptLogin("Gagal terhubung server. Coba lagi.");
             }
         }
 
-        // FUNGSI GANTI PASSWORD
         function changePasswordModal() {
             Swal.fire({
                 title: 'Ganti Password',
@@ -313,57 +269,57 @@
                 inputPlaceholder: 'Password Baru',
                 showCancelButton: true,
                 confirmButtonText: 'Simpan',
+                confirmButtonColor: '#eab308',
                 preConfirm: (newPass) => {
                     if (!newPass) Swal.showValidationMessage("Password tidak boleh kosong");
                     return newPass;
                 }
             }).then((result) => {
                 if (result.isConfirmed) {
-                    postData({ 
-                        action: 'changePassword', 
-                        newPassword: result.value 
-                    }, 'Password Berhasil Diubah!');
+                    postData({ action: 'changePassword', newPassword: result.value }, 'Password Berhasil Diubah!');
                 }
             });
         }
 
         function logoutAdmin() {
             Swal.fire({
-                title: 'Logout?', icon: 'question',
-                showCancelButton: true, confirmButtonText: 'Ya', cancelButtonText: 'Batal'
+                title: 'Keluar?', icon: 'question',
+                showCancelButton: true, confirmButtonText: 'Ya', confirmButtonColor: '#dc2626'
             }).then((result) => {
                 if (result.isConfirmed) {
                     isAdmin = false; adminToken = '';
                     adminPanel.classList.add('hidden');
                     history.pushState("", document.title, window.location.pathname);
                     applyFilters();
-                    Swal.fire('Logout Berhasil', '', 'success');
+                    Swal.fire({title: 'Logout Berhasil', icon: 'success', timer: 1000, showConfirmButton: false});
                 }
             });
         }
 
+        // --- DATA HANDLING ---
         async function fetchProducts() {
             try {
                 loadingDiv.classList.remove('hidden'); productGrid.classList.add('hidden');
-                const response = await fetch(API_URL); // GET Request
+                const response = await fetch(API_URL);
                 const result = await response.json();
-                if (result.status === 'success') { products = result.data; applyFilters(); }
-                else { Swal.fire('Error', 'Gagal memuat data.', 'error'); }
-            } catch (error) { Swal.fire('Koneksi Error', 'Gagal terhubung database.', 'error'); } 
-            finally { loadingDiv.classList.add('hidden'); productGrid.classList.remove('hidden'); }
+                if (result.status === 'success') { 
+                    products = result.data; 
+                    applyFilters(); 
+                } else { 
+                    Swal.fire('Error', 'Gagal memuat data.', 'error'); 
+                }
+            } catch (error) { 
+                Swal.fire('Koneksi Error', 'Gagal terhubung database.', 'error'); 
+            } finally { 
+                loadingDiv.classList.add('hidden'); productGrid.classList.remove('hidden'); 
+            }
         }
 
         async function postData(payload, successMsg) {
             Swal.fire({ title: 'Memproses...', didOpen: () => Swal.showLoading() });
             try {
-                // Kirim Password saat ini (adminToken) untuk otorisasi di setiap request
                 const body = JSON.stringify({ ...payload, password: adminToken });
-                
-                // Gunakan POST normal agar bisa baca response error jika password salah
-                const response = await fetch(API_URL, {
-                    method: 'POST',
-                    body: body
-                });
+                const response = await fetch(API_URL, { method: 'POST', body: body });
                 const result = await response.json();
 
                 if (result.status === 'success') {
@@ -372,41 +328,58 @@
                     Swal.fire('Gagal', result.message, 'error');
                 }
             } catch (error) { 
-                // Jika fetch error (biasanya karena CORS di mode POST simple request kadang rewel)
-                // Kita coba fallback 'no-cors' tapi user tidak tahu kalau gagal.
-                // Untuk sekarang asumsikan koneksi lancar.
                 Swal.fire('Error', 'Gagal menghubungi server.', 'error'); 
             }
         }
 
+        // --- CRUD MODALS ---
         function showAddProductModal() {
-            openProductModal('Tambah Paket Baru', 'add');
+            openProductModal('Tambah Produk Baru', 'add');
         }
 
         function showEditProductModal(id) {
             const product = products.find(p => p.id.toString() === id.toString());
             if (!product) return;
-            openProductModal('Edit Paket', 'edit', product);
+            openProductModal('Edit Produk', 'edit', product);
         }
 
         function openProductModal(title, action, data = null) {
+            let cat = data ? data.category : 'internet';
+            if(cat === 'combo' || cat === 'flexmax') cat = 'internet'; 
+
             Swal.fire({
                 title: title,
                 html: `
-                    <input id="swal-name" class="swal2-input" placeholder="Nama Paket" value="${data ? data.name : ''}">
-                    <select id="swal-category" class="swal2-input">
-                        <option value="combo" ${data && data.category === 'combo' ? 'selected' : ''}>Combo Flex</option>
-                        <option value="flexmax" ${data && data.category === 'flexmax' ? 'selected' : ''}>FlexMax</option>
-                    </select>
-                    <textarea id="swal-desc" class="swal2-textarea" placeholder="Deskripsi">${data ? data.desc : ''}</textarea>
-                    <input id="swal-price" type="number" class="swal2-input" placeholder="Harga" value="${data ? data.price : ''}">
+                    <div class="space-y-3 mt-4">
+                        <input id="swal-name" class="swal2-input !m-0 !w-full" placeholder="Nama Produk (Mis: VPN SG 1 Bulan)" value="${data ? data.name : ''}">
+                        
+                        <select id="swal-category" class="swal2-input !m-0 !w-full">
+                            <option value="internet" ${cat === 'internet' ? 'selected' : ''}>Internet (Data)</option>
+                            <option value="vpn" ${cat === 'vpn' ? 'selected' : ''}>VPN / SSH</option>
+                            <option value="apps" ${cat === 'apps' ? 'selected' : ''}>Akun Premium (Netflix dll)</option>
+                            <option value="game" ${cat === 'game' ? 'selected' : ''}>Topup Game</option>
+                        </select>
+                        
+                        <textarea id="swal-desc" class="swal2-textarea !m-0 !w-full" placeholder="Deskripsi (Gunakan enter untuk baris baru)" style="height:100px">${data ? data.desc : ''}</textarea>
+                        
+                        <div class="relative">
+                            <span class="absolute left-3 top-3 text-gray-500">Rp</span>
+                            <input id="swal-price" type="number" class="swal2-input !m-0 !w-full !pl-10" placeholder="Harga" value="${data ? data.price : ''}">
+                        </div>
+                    </div>
                 `,
-                focusConfirm: false, showCancelButton: true, confirmButtonText: 'Simpan',
+                focusConfirm: false, showCancelButton: true, confirmButtonText: 'Simpan', confirmButtonColor: '#dc2626',
                 preConfirm: () => {
                     const name = document.getElementById('swal-name').value;
                     const price = document.getElementById('swal-price').value;
                     if (!name || !price) return Swal.showValidationMessage('Nama dan Harga wajib diisi');
-                    return { name, category: document.getElementById('swal-category').value, desc: document.getElementById('swal-desc').value, price }
+                    
+                    return { 
+                        name, 
+                        category: document.getElementById('swal-category').value, 
+                        desc: document.getElementById('swal-desc').value, 
+                        price 
+                    }
                 }
             }).then((result) => {
                 if (result.isConfirmed) {
@@ -420,7 +393,7 @@
         async function toggleStatus(id, currentStatus) {
             const actionText = currentStatus ? "Sembunyikan" : "Tampilkan";
             Swal.fire({
-                title: `${actionText} Paket?`, icon: 'warning',
+                title: `${actionText} Produk?`, icon: 'warning',
                 showCancelButton: true, confirmButtonText: `Ya`
             }).then((result) => {
                 if (result.isConfirmed) {
@@ -429,21 +402,37 @@
             });
         }
 
+        // --- RENDER LOGIC ---
         const formatRupiah = (n) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(n);
+        
         const formatDescription = (t) => {
             if (!t) return '';
             return '<ul class="text-sm text-gray-600 space-y-2 mb-5">' + 
                 t.split(/\n|- /).filter(l => l.trim()).map(l => 
-                `<li class="flex items-start gap-2.5"><div class="mt-0.5 min-w-[16px]"><i class="fa-solid fa-check-circle text-blue-500 text-xs"></i></div><span class="flex-1 leading-relaxed">${l.replace(/^"|"$/g, '').trim()}</span></li>`).join('') + '</ul>';
+                `<li class="flex items-start gap-2.5"><div class="mt-0.5 min-w-[16px]"><i class="fa-solid fa-check text-red-500 text-xs"></i></div><span class="flex-1 leading-relaxed">${l.replace(/^"|"$/g, '').trim()}</span></li>`).join('') + '</ul>';
         };
+
+        // Helper untuk tampilan Kategori (Modified for Red Theme)
+        function getCategoryStyle(cat, name) {
+            // Support Legacy Data
+            if(name && (name.includes('FlexMax') || cat === 'flexmax')) return { icon: 'fa-bolt', color: 'from-red-500 to-red-700', text: 'Internet', label: 'FlexMax' };
+            if(name && (name.includes('Combo') || cat === 'combo')) return { icon: 'fa-signal', color: 'from-orange-500 to-orange-700', text: 'Internet', label: 'Combo Flex' };
+
+            switch(cat) {
+                case 'vpn': return { icon: 'fa-shield-halved', color: 'from-emerald-600 to-emerald-800', text: 'Security', label: 'VPN Premium' };
+                case 'game': return { icon: 'fa-gamepad', color: 'from-purple-600 to-purple-800', text: 'Games', label: 'Topup Game' };
+                case 'apps': return { icon: 'fa-brands fa-youtube', color: 'from-rose-500 to-rose-700', text: 'Streaming', label: 'Premium App' };
+                default: return { icon: 'fa-wifi', color: 'from-red-600 to-red-800', text: 'Internet', label: 'Data Paket' };
+            }
+        }
 
         function filterCategory(cat) {
             currentCategory = cat;
             document.querySelectorAll('.category-btn').forEach(btn => {
                 const isActive = btn.getAttribute('onclick').includes(`'${cat}'`);
                 btn.className = isActive 
-                    ? 'category-btn active whitespace-nowrap px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 bg-blue-600 text-white shadow-md shadow-blue-200'
-                    : 'category-btn whitespace-nowrap px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 bg-white text-gray-600 border border-gray-200 hover:bg-gray-50 hover:border-blue-300';
+                    ? 'category-btn cat-btn-active whitespace-nowrap px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-300'
+                    : 'category-btn cat-btn-inactive whitespace-nowrap px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300';
             });
             applyFilters();
         }
@@ -451,9 +440,20 @@
         function applyFilters() {
             const term = searchInput.value.toLowerCase();
             let filtered = products.filter(p => {
-                const matchCat = currentCategory === 'all' || (p.category || (p.name.includes('FlexMax') ? 'flexmax' : 'combo')) === currentCategory;
+                let pCat = p.category;
+                if(!pCat) {
+                    if(p.name.includes('FlexMax') || p.name.includes('Combo')) pCat = 'internet';
+                    else pCat = 'internet'; 
+                }
+                
+                let matchCat = false;
+                if(currentCategory === 'all') matchCat = true;
+                else if (currentCategory === 'internet') matchCat = (pCat === 'internet' || pCat === 'flexmax' || pCat === 'combo');
+                else matchCat = (pCat === currentCategory);
+
                 const matchSearch = (p.name && p.name.toLowerCase().includes(term)) || (p.desc && p.desc.toLowerCase().includes(term));
                 const matchActive = isAdmin ? true : (p.active === true || p.active === "true" || p.active === 1);
+                
                 return matchCat && matchSearch && matchActive;
             });
             filtered.sort((a, b) => Number(a.price) - Number(b.price));
@@ -461,45 +461,60 @@
         }
 
         function renderProducts(data) {
-            productGrid.innerHTML = ''; productCount.textContent = `${data.length} Paket`;
+            productGrid.innerHTML = ''; productCount.textContent = `${data.length} Item`;
             noResults.classList.toggle('hidden', data.length > 0);
             
             data.forEach(p => {
                 const isActive = (p.active === true || p.active === "true" || p.active === 1);
                 const card = document.createElement('div');
-                card.className = 'bg-white rounded-2xl shadow-sm hover:shadow-xl border border-gray-100 flex flex-col transition-all duration-300 card-hover overflow-hidden relative group animate-fade-in';
+                card.className = 'bg-white rounded-2xl shadow-sm border border-red-100 flex flex-col card-hover overflow-hidden relative group animate-fade-in h-full';
                 if (!isActive && isAdmin) card.classList.add('item-hidden');
 
-                const isFlexMax = (p.name && p.name.includes('FlexMax')) || p.category === 'flexmax';
-                const badge = isFlexMax 
-                    ? '<span class="absolute top-0 right-0 bg-gradient-to-bl from-purple-100 to-white text-purple-700 text-[10px] font-bold px-3 py-1.5 rounded-bl-xl border-l border-b border-purple-50 shadow-sm">FlexMax</span>'
-                    : '<span class="absolute top-0 right-0 bg-gradient-to-bl from-blue-100 to-white text-blue-700 text-[10px] font-bold px-3 py-1.5 rounded-bl-xl border-l border-b border-blue-50 shadow-sm">Combo Flex</span>';
-
+                const style = getCategoryStyle(p.category, p.name);
                 const safeName = p.name ? p.name.replace(/'/g, "\\'") : 'Tanpa Nama';
                 
+                // Admin Controls
                 let adminControls = '';
                 if (isAdmin) {
-                    const toggleBtn = isActive 
-                        ? `<button onclick="toggleStatus('${p.id}', true)" class="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1.5 rounded-md text-xs font-bold shadow flex items-center gap-1"><i class="fa-solid fa-eye-slash"></i> Hide</button>`
-                        : `<button onclick="toggleStatus('${p.id}', false)" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1.5 rounded-md text-xs font-bold shadow flex items-center gap-1"><i class="fa-solid fa-eye"></i> Show</button>`;
-                    const editBtn = `<button onclick="showEditProductModal('${p.id}')" class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1.5 rounded-md text-xs font-bold shadow flex items-center gap-1"><i class="fa-solid fa-pen"></i> Edit</button>`;
-                    adminControls = `<div class="absolute top-0 left-0 flex gap-1 p-2 z-20">${toggleBtn}${editBtn}</div>`;
+                    const statusBtn = isActive 
+                        ? `<button onclick="toggleStatus('${p.id}', true)" class="bg-gray-800/80 hover:bg-black text-white p-2 rounded-lg backdrop-blur-sm"><i class="fa-solid fa-eye-slash"></i></button>`
+                        : `<button onclick="toggleStatus('${p.id}', false)" class="bg-red-600 hover:bg-red-700 text-white p-2 rounded-lg"><i class="fa-solid fa-eye"></i></button>`;
+                    adminControls = `
+                        <div class="absolute top-3 right-3 flex gap-2 z-20 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <button onclick="showEditProductModal('${p.id}')" class="bg-yellow-500 hover:bg-yellow-600 text-white p-2 rounded-lg shadow-sm"><i class="fa-solid fa-pen"></i></button>
+                            ${statusBtn}
+                        </div>`;
                 }
 
                 card.innerHTML = `
-                    ${badge} ${adminControls}
-                    <div class="p-6 flex-grow mt-2">
-                        <div class="flex items-center mb-4">
-                            <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center text-white font-bold text-lg mr-4 shadow-lg shadow-blue-500/30">XL</div>
-                            <h3 onclick="showOrderOptions('${safeName}', ${p.price})" class="font-bold text-lg text-gray-800 leading-tight hover:text-blue-600 transition-colors cursor-pointer select-none">${p.name}</h3>
+                    <div class="absolute top-0 left-0 bg-${style.color.split(' ')[1].replace('500','100').replace('600','100')} text-${style.color.split(' ')[1].replace('500','700').replace('600','700')} text-[10px] font-bold px-3 py-1.5 rounded-br-xl border-r border-b border-gray-100 shadow-sm z-10">
+                        ${style.label}
+                    </div>
+                    ${adminControls}
+                    
+                    <div class="p-6 flex-grow mt-4">
+                        <div class="flex items-start gap-4 mb-4">
+                            <div class="w-12 h-12 rounded-2xl bg-gradient-to-br ${style.color} flex-shrink-0 flex items-center justify-center text-white shadow-lg shadow-red-500/10">
+                                <i class="${style.icon} text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 onclick="showOrderOptions('${safeName}', ${p.price})" class="font-bold text-gray-800 leading-tight hover:text-red-600 transition-colors cursor-pointer select-none text-lg line-clamp-2">${p.name}</h3>
+                                <p class="text-xs text-gray-400 mt-1 uppercase tracking-wide font-semibold">${style.text}</p>
+                            </div>
                         </div>
                         <div class="h-px bg-gradient-to-r from-gray-100 via-gray-200 to-gray-100 my-4"></div>
                         ${formatDescription(p.desc)}
                     </div>
-                    <div class="bg-gray-50/50 p-5 border-t border-gray-100 mt-auto backdrop-blur-sm">
-                        <div class="flex justify-between items-end">
-                            <div><p class="text-[11px] uppercase tracking-wider text-gray-400 font-semibold mb-1">Harga Terbaik</p><p class="text-2xl font-bold text-gray-800">${formatRupiah(p.price)}</p></div>
-                            <button onclick="showOrderOptions('${safeName}', ${p.price})" class="bg-green-500 hover:bg-green-600 text-white font-medium py-2.5 px-6 rounded-xl shadow-lg shadow-green-500/20 transition-all hover:-translate-y-1 flex items-center gap-2"><i class="fa-solid fa-qrcode text-lg"></i><span>Beli</span></button>
+                    
+                    <div class="bg-gray-50/80 p-5 border-t border-gray-100 mt-auto backdrop-blur-sm">
+                        <div class="flex justify-between items-center">
+                            <div class="flex flex-col">
+                                <span class="text-[10px] uppercase text-gray-400 font-bold">Harga</span>
+                                <span class="text-xl font-bold text-gray-800">${formatRupiah(p.price)}</span>
+                            </div>
+                            <button onclick="showOrderOptions('${safeName}', ${p.price})" class="bg-red-600 hover:bg-red-700 text-white font-medium py-2.5 px-6 rounded-xl shadow-lg shadow-red-500/20 transition-all hover:-translate-y-1 flex items-center gap-2">
+                                <span>Beli</span> <i class="fa-solid fa-arrow-right text-sm"></i>
+                            </button>
                         </div>
                     </div>
                 `;
@@ -509,7 +524,7 @@
 
         function showOrderOptions(name, price) {
             const formattedPrice = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(price);
-            const waMessage = `Halo Admin, saya sudah melakukan pembayaran untuk order ${name} senilai ${formattedPrice}. Mohon diproses.`;
+            const waMessage = `Halo Admin SRPCOM, saya sudah transfer senilai ${formattedPrice} untuk pembelian: *${name}*. Mohon diproses.`;
             const waLink = `https://wa.me/6282175037525?text=${encodeURIComponent(waMessage)}`;
             const tgLink = `https://t.me/srpcomstorebot`;
 
@@ -517,38 +532,56 @@
                 title: `<span class="text-lg font-bold text-gray-800">${name}</span>`,
                 html: `
                     <div class="text-center text-gray-600 mb-4">
-                        <p class="mb-3 text-sm">Silakan lakukan pembayaran ke QRIS:</p>
-                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-2 mb-4 inline-block"><span class="text-2xl font-bold text-blue-700">${formattedPrice}</span></div>
-                        <div class="flex justify-center mb-4"><img src="https://github.com/srpcom/regulerxl/blob/main/qris%20srpcom.jpg?raw=true" alt="QRIS SRPCOM" class="w-full h-auto rounded-lg border border-gray-200 shadow-sm" style="max-height: 400px; object-fit: contain;"></div>
-                        <p class="text-xs text-gray-400 mb-4"><i class="fa-solid fa-shield-halved"></i> Valid untuk semua E-Wallet & Bank</p>
-                        <p class="text-sm font-bold text-gray-700 mb-2">Sudah Transfer?</p>
+                        <div class="bg-red-50 border border-red-100 rounded-lg p-3 mb-4 inline-block">
+                            <span class="text-2xl font-bold text-red-700">${formattedPrice}</span>
+                        </div>
+                        <p class="mb-2 text-sm">Scan QRIS untuk pembayaran:</p>
+                        <div class="flex justify-center mb-4 relative group">
+                             <div class="absolute inset-0 bg-red-500 blur opacity-20 rounded-lg group-hover:opacity-30 transition"></div>
+                             <img src="https://github.com/srpcom/regulerxl/blob/main/qris%20srpcom.jpg?raw=true" alt="QRIS SRPCOM" class="relative w-full h-auto rounded-lg border border-gray-200 shadow-sm z-10" style="max-height: 350px; object-fit: contain;">
+                        </div>
+                        <p class="text-xs text-gray-400 mb-4 bg-gray-50 py-2 rounded border border-gray-100"><i class="fa-solid fa-check-double text-green-500"></i> Otomatis Support Semua E-Wallet & Bank</p>
+                        <div class="h-px bg-gray-200 w-full mb-4"></div>
+                        <p class="text-sm font-bold text-gray-700 mb-2">Konfirmasi Pembayaran:</p>
                     </div>
-                    <div class="flex flex-col gap-3">
-                        <a href="${waLink}" target="_blank" class="flex items-center justify-center gap-2 bg-green-500 text-white py-3 rounded-xl hover:bg-green-600 transition shadow-md font-bold group"><i class="fa-brands fa-whatsapp text-xl"></i> Konfirmasi via WhatsApp</a>
-                        <a href="${tgLink}" target="_blank" class="flex items-center justify-center gap-2 bg-blue-500 text-white py-3 rounded-xl hover:bg-blue-600 transition shadow-md font-bold group"><i class="fa-brands fa-telegram text-xl"></i> Order via Telegram</a>
+                    <div class="grid grid-cols-2 gap-3">
+                        <a href="${waLink}" target="_blank" class="flex items-center justify-center gap-2 bg-green-500 text-white py-3 rounded-xl hover:bg-green-600 transition shadow-md font-bold text-sm"><i class="fa-brands fa-whatsapp text-lg"></i> WhatsApp</a>
+                        <a href="${tgLink}" target="_blank" class="flex items-center justify-center gap-2 bg-sky-500 text-white py-3 rounded-xl hover:bg-sky-600 transition shadow-md font-bold text-sm"><i class="fa-brands fa-telegram text-lg"></i> Telegram</a>
                     </div>
                 `,
-                showConfirmButton: false, showCloseButton: true, width: '450px', customClass: { popup: 'rounded-2xl shadow-xl' }
+                showConfirmButton: false, showCloseButton: true, width: '400px', 
+                customClass: { popup: 'rounded-2xl shadow-2xl' }
             });
         }
 
         function showCaraOrder() {
              Swal.fire({
-                title: '<span class="text-2xl font-bold text-gray-800">Cara Order</span>',
+                title: '<span class="text-xl font-bold text-gray-800">Panduan Transaksi</span>',
                 html: `
-                    <div class="text-left text-sm text-gray-600 space-y-6 mt-4">
-                        <div class="bg-blue-50 p-4 rounded-xl border border-blue-100">
-                            <p class="mb-2 font-bold text-blue-800 flex items-center gap-2"><span class="w-6 h-6 bg-blue-200 rounded-full flex items-center justify-center text-xs">1</span> Via Telegram Bot</p>
-                            <p class="ml-8 text-gray-700">Order otomatis 24 jam melalui bot:<br><a href="https://t.me/srpcomstorebot" target="_blank" class="text-blue-600 font-bold hover:underline inline-flex items-center gap-1 mt-1"><i class="fa-brands fa-telegram"></i> @srpcomstorebot</a></p>
+                    <div class="text-left text-sm text-gray-600 space-y-4 mt-4">
+                        <div class="flex gap-3">
+                            <div class="flex-shrink-0 w-8 h-8 bg-red-100 text-red-600 rounded-full flex items-center justify-center font-bold">1</div>
+                            <div>
+                                <p class="font-bold text-gray-800">Pilih Produk</p>
+                                <p class="text-xs mt-1">Cari produk yang diinginkan (VPN, Paket Data, dll) lalu klik tombol "Beli".</p>
+                            </div>
                         </div>
-                        <div class="bg-green-50 p-4 rounded-xl border border-green-100">
-                            <p class="mb-2 font-bold text-green-800 flex items-center gap-2"><span class="w-6 h-6 bg-green-200 rounded-full flex items-center justify-center text-xs">2</span> Via WhatsApp Admin</p>
-                            <p class="ml-8 text-gray-700 mb-3">1. Pilih paket & klik tombol <b>Beli</b><br>2. Lakukan pembayaran ke QRIS dibawah:</p>
-                            <div class="flex justify-center mt-3 bg-white p-3 rounded-xl border border-gray-200 shadow-sm"><img src="https://github.com/srpcom/regulerxl/blob/main/qris%20srpcom.jpg?raw=true" alt="QRIS" class="max-w-full h-auto rounded-lg" style="max-height: 300px;"></div>
-                            <p class="text-center text-xs text-gray-400 mt-2 flex items-center justify-center gap-1"><i class="fa-solid fa-shield-halved"></i> Scan valid untuk semua E-Wallet/Bank</p>
+                        <div class="flex gap-3">
+                            <div class="flex-shrink-0 w-8 h-8 bg-red-100 text-red-600 rounded-full flex items-center justify-center font-bold">2</div>
+                            <div>
+                                <p class="font-bold text-gray-800">Pembayaran QRIS</p>
+                                <p class="text-xs mt-1">Scan kode QR yang muncul menggunakan Dana/OVO/Gopay/ShopeePay/Mbanking.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-3">
+                            <div class="flex-shrink-0 w-8 h-8 bg-red-100 text-red-600 rounded-full flex items-center justify-center font-bold">3</div>
+                            <div>
+                                <p class="font-bold text-gray-800">Konfirmasi</p>
+                                <p class="text-xs mt-1">Klik tombol WhatsApp untuk mengirim bukti transfer ke Admin. Pesanan diproses secepatnya.</p>
+                            </div>
                         </div>
                     </div>`,
-                showCloseButton: true, showConfirmButton: false, focusConfirm: false, width: '500px', customClass: { popup: 'rounded-2xl', closeButton: 'focus:outline-none' }
+                showCloseButton: true, showConfirmButton: false, width: '400px', customClass: { popup: 'rounded-2xl' }
             });
         }
         searchInput.addEventListener('input', applyFilters);
