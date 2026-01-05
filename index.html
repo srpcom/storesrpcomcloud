@@ -97,9 +97,14 @@
             <i class="fa-solid fa-key text-xl"></i>
         </button>
         
-        <!-- Tombol Maintenance Mode (NEW) -->
+        <!-- Tombol Maintenance Mode -->
         <button id="btnMaintenanceToggle" onclick="toggleMaintenance()" class="bg-gray-700 hover:bg-gray-800 text-white w-14 h-14 rounded-full shadow-lg flex items-center justify-center transition-transform hover:scale-110 tooltip" title="Maintenance Mode">
             <i class="fa-solid fa-power-off text-xl"></i>
+        </button>
+        
+        <!-- Tombol Edit Info (NEW) -->
+        <button onclick="editInfoTextModal()" class="bg-cyan-500 hover:bg-cyan-600 text-white w-14 h-14 rounded-full shadow-lg flex items-center justify-center transition-transform hover:scale-110 tooltip" title="Edit Info Running">
+            <i class="fa-solid fa-bullhorn text-xl"></i>
         </button>
 
         <!-- Tombol Kelola Kategori -->
@@ -165,14 +170,17 @@
     <!-- MAIN CONTENT -->
     <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 w-full">
         
-        <!-- Info Banner -->
+        <!-- Info Banner (DYNAMIC) -->
         <div class="bg-white border-l-4 border-red-500 p-4 mb-8 rounded-r-xl shadow-sm flex items-start sm:items-center gap-4 hover:shadow-md transition-shadow">
             <div class="flex-shrink-0 text-red-600 bg-red-50 p-3 rounded-full">
                 <i class="fa-solid fa-bullhorn text-lg"></i>
             </div>
             <div class="text-sm text-gray-600">
                 <span class="font-bold text-gray-800 block sm:inline mb-1 sm:mb-0">Info Terbaru:</span> 
-                Ready <span class="font-bold text-red-600">Perpanjang Masa Aktif</span> & <span class="font-bold text-red-600">VPN Premium</span>. Proses cepat via Admin.
+                <!-- Area ini sekarang dinamis -->
+                <span id="dynamicInfoText" class="inline-block">
+                    Loading info...
+                </span>
             </div>
         </div>
 
@@ -248,7 +256,8 @@
         let currentCategory = 'all';
         let isAdmin = false;
         let adminToken = '';
-        let isMaintenanceMode = false; // Status local
+        let isMaintenanceMode = false;
+        let currentInfoText = '';
 
         const productGrid = document.getElementById('productGrid');
         const searchInput = document.getElementById('searchInput');
@@ -260,6 +269,7 @@
         const maintenanceScreen = document.getElementById('maintenanceScreen');
         const adminMaintAlert = document.getElementById('adminMaintAlert');
         const btnMaintenanceToggle = document.getElementById('btnMaintenanceToggle');
+        const dynamicInfoText = document.getElementById('dynamicInfoText');
 
         window.onload = () => { checkAdminHash(); fetchProducts(); };
         window.onhashchange = checkAdminHash;
@@ -309,7 +319,7 @@
                     adminToken = password;
                     isAdmin = true;
                     adminPanel.classList.remove('hidden');
-                    checkMaintenanceUI(); // Update UI after login
+                    checkMaintenanceUI();
                     applyFilters();
                     Swal.fire({title: 'Login Berhasil', icon: 'success', timer: 1500, showConfirmButton: false});
                 } else {
@@ -349,40 +359,57 @@
                     isAdmin = false; adminToken = '';
                     adminPanel.classList.add('hidden');
                     history.pushState("", document.title, window.location.pathname);
-                    checkMaintenanceUI(); // Re-check UI after logout
+                    checkMaintenanceUI(); 
                     applyFilters();
                     Swal.fire({title: 'Logout Berhasil', icon: 'success', timer: 1000, showConfirmButton: false});
                 }
             });
         }
 
-        // --- MAINTENANCE LOGIC (NEW) ---
+        // --- INFO TEXT EDITING (NEW) ---
+        function editInfoTextModal() {
+            Swal.fire({
+                title: 'Edit Info Terbaru',
+                input: 'textarea',
+                inputValue: currentInfoText,
+                inputLabel: 'HTML Tag Diperbolehkan (<b>, <br>, <span>)',
+                inputPlaceholder: 'Masukkan teks info...',
+                showCancelButton: true,
+                confirmButtonText: 'Update Info',
+                confirmButtonColor: '#06b6d4', // Cyan
+                customClass: { input: 'h-32 text-sm' }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    postData({ action: 'updateInfoText', text: result.value }, 'Info berhasil diupdate!');
+                    // Optimistic UI Update
+                    currentInfoText = result.value;
+                    dynamicInfoText.innerHTML = result.value;
+                }
+            });
+        }
+
+        // --- MAINTENANCE LOGIC ---
         function checkMaintenanceUI() {
-            // Update Toggle Button Color
             if (isMaintenanceMode) {
                 btnMaintenanceToggle.classList.remove('bg-gray-700', 'hover:bg-gray-800');
-                btnMaintenanceToggle.classList.add('bg-green-500', 'hover:bg-green-600'); // Green to turn ON (meaning it's currently ON)
+                btnMaintenanceToggle.classList.add('bg-green-500', 'hover:bg-green-600'); 
                 btnMaintenanceToggle.innerHTML = '<i class="fa-solid fa-power-off text-xl"></i>';
             } else {
                 btnMaintenanceToggle.classList.add('bg-gray-700', 'hover:bg-gray-800');
                 btnMaintenanceToggle.classList.remove('bg-green-500', 'hover:bg-green-600');
             }
 
-            // Logic Block/Allow Screen
             if (isMaintenanceMode) {
                 if (isAdmin) {
-                    // Admin sees warning but can access
                     maintenanceScreen.classList.add('hidden');
                     adminMaintAlert.classList.remove('hidden');
                     document.body.style.overflow = 'auto'; 
                 } else {
-                    // User blocked
                     maintenanceScreen.classList.remove('hidden');
                     adminMaintAlert.classList.add('hidden');
                     document.body.style.overflow = 'hidden';
                 }
             } else {
-                // Maintenance OFF
                 maintenanceScreen.classList.add('hidden');
                 adminMaintAlert.classList.add('hidden');
                 document.body.style.overflow = 'auto';
@@ -392,7 +419,7 @@
         async function toggleMaintenance() {
             const newState = !isMaintenanceMode;
             const actionText = newState ? "AKTIFKAN" : "MATIKAN";
-            const confirmColor = newState ? "#ef4444" : "#22c55e"; // Red for ON (Warning), Green for OFF (Safe)
+            const confirmColor = newState ? "#ef4444" : "#22c55e"; 
 
             Swal.fire({
                 title: `${actionText} Maintenance?`,
@@ -404,7 +431,6 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     postData({ action: 'toggleMaintenance', status: newState }, null, (res) => {
-                         // Callback khusus update local state
                          isMaintenanceMode = newState;
                          checkMaintenanceUI();
                          Swal.fire('Sukses', `Maintenance Mode: ${newState ? 'ON' : 'OFF'}`, 'success');
@@ -423,16 +449,19 @@
                 if (result.status === 'success') { 
                     products = result.data;
                     
-                    // Update Maintenance Status from Server
+                    // Update Settings from Server
                     isMaintenanceMode = result.maintenance;
-                    checkMaintenanceUI();
+                    currentInfoText = result.infoText || "Info belum diset.";
+                    dynamicInfoText.innerHTML = currentInfoText; // Render HTML
 
+                    checkMaintenanceUI();
                     renderCategoryTabs(products); 
                     applyFilters(); 
                 } else { 
                     Swal.fire('Error', 'Gagal memuat data.', 'error'); 
                 }
             } catch (error) { 
+                console.error(error);
                 Swal.fire('Koneksi Error', 'Gagal terhubung database.', 'error'); 
             } finally { 
                 loadingDiv.classList.add('hidden'); productGrid.classList.remove('hidden'); 
