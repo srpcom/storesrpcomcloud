@@ -449,8 +449,14 @@
 
         function showOrderOptions(name, price) {
             const formattedPrice = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(price);
+            
+            // Pesan seragam untuk WA dan Telegram
             const waMessage = `Halo Admin SRPCOM, saya sudah transfer senilai ${formattedPrice} untuk pembelian: *${name}*. Mohon diproses.`;
-            const waLink = `https://wa.me/6282175037525?text=${encodeURIComponent(waMessage)}`; const tgLink = `https://t.me/srpcomadmin`; 
+            
+            const waLink = `https://wa.me/6282175037525?text=${encodeURIComponent(waMessage)}`; 
+            
+            // Mencoba pre-fill text ke Telegram juga (Support tergantung client/device user)
+            const tgLink = `https://t.me/srpcomadmin?text=${encodeURIComponent(waMessage)}`; 
 
             Swal.fire({
                 title: `<span class="text-lg font-bold text-gray-800">${name}</span>`,
